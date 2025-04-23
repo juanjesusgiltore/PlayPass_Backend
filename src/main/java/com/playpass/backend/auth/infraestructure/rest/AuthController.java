@@ -28,7 +28,7 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/refresh")
     public TokenResponse refreshToken(@RequestHeader (HttpHeaders.AUTHORIZATION)
                                           final String authHeader){
 
