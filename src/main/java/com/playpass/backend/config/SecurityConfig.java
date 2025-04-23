@@ -1,24 +1,27 @@
-package com.playpass.backend.auth;
+package com.playpass.backend.config;
 
+import com.playpass.backend.auth.infraestructure.conf.JwtAuthFilter;
+import com.playpass.backend.auth.infraestructure.entity.Token;
+import com.playpass.backend.auth.domain.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.token.Token;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-/*
 @Configuration
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final TokenRepository tokenRepository;
+    private final AuthenticationProvider authenticationProvider;
 
 
     @Bean
@@ -33,6 +36,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sess->
                         sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout->
                         logout.logoutUrl("/auth/logout")
@@ -56,10 +60,9 @@ public class SecurityConfig {
 
         final String jwToken=token.substring(7);
         final Token foundToken=tokenRepository.findByToken(jwToken)
-                .orElseTrow(()->new IllegalArgumentException("Invalid token"));
+                .orElseThrow(()->new IllegalArgumentException("Invalid token"));
         foundToken.setExpired(true);
         foundToken.setRevoked(true);
         tokenRepository.save(foundToken);
     }
 }
-*/
