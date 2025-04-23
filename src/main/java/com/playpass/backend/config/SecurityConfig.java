@@ -29,7 +29,8 @@ public class SecurityConfig {
         return  http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/auth/**")
+                        .requestMatchers("/auth/**","/v3/api-docs/**",
+                                "/swagger-ui/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
@@ -54,7 +55,7 @@ public class SecurityConfig {
     }
 
     private void logout(final String  token) {
-        if(token!=null||!token.startsWith("Bearer")) {
+        if(token==null||!token.startsWith("Bearer")) {
             throw new IllegalArgumentException("Invalid token");
         }
 
