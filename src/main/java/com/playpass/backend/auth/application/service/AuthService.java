@@ -33,6 +33,7 @@ public class AuthService {
                 .name(request.name())
                 .email(request.email())
                 .phone(request.phone())
+                .role(request.role())
                 .password(passwordEncoder.encode(request.password()))
                 .build();
 

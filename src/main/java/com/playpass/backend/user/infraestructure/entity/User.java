@@ -16,8 +16,13 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
+    public enum Role {
+        ADMIN,USER
+    }
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -32,4 +37,7 @@ public class User {
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Token>tokens;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
