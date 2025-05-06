@@ -32,6 +32,17 @@ public class JwtService {
         return jwtToken.getSubject();
     }
 
+    public String extractRole(final String token) {
+        final Claims jwtToken=Jwts.parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+
+        return jwtToken.get("role", String.class);
+    }
+
     public String generateToken(final User user) {
         return buildToken(user,jwtExpiration);
     }

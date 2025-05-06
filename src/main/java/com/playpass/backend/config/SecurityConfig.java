@@ -15,8 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
@@ -29,16 +30,12 @@ public class SecurityConfig {
         return  http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("ADMIN","USER")
                         .requestMatchers(
                                 "/auth/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
-                                "/swagger-ui/**")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                                "/swagger-ui/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sess->
                         sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

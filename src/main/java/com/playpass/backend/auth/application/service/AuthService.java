@@ -58,6 +58,8 @@ public class AuthService {
         String jwtRefreshToken=jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
 
+        saveUserToken(user,jwToken);
+
         return new TokenResponse(jwToken,jwtRefreshToken);
 
     }

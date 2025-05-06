@@ -1,5 +1,7 @@
 package com.playpass.backend.auth.infraestructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.playpass.backend.user.infraestructure.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,7 @@ public class Token {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
+    @JsonBackReference
     private User user;
 
 

@@ -20,6 +20,7 @@ public class TokenAdapter implements TokenRepository {
 
     @Override
     public Optional<Token> findByToken(String token) {
+
         return tokenRepositoryPostgreSql.getTokenByToken(token);
     }
 

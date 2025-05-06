@@ -30,6 +30,8 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
+
+
     @Operation(
             summary = "Refresh token",
             description = "Renovar el token usando el Authorization header",
