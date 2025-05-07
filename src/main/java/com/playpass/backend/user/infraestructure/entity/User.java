@@ -1,8 +1,8 @@
 package com.playpass.backend.user.infraestructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.playpass.backend.activity.infraestructure.entity.Booking;
 import com.playpass.backend.auth.infraestructure.entity.Token;
+import com.playpass.backend.booking.infraestructure.entity.Booking;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,7 +44,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
 }

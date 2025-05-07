@@ -1,7 +1,7 @@
 package com.playpass.backend.sesion.infraestructure.entity;
 
 import com.playpass.backend.activity.infraestructure.entity.Activity;
-import com.playpass.backend.activity.infraestructure.entity.Booking;
+import com.playpass.backend.booking.infraestructure.entity.Booking;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
