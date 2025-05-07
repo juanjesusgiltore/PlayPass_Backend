@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class ActivityConf {
 
 
-    @Bean
-    CommandLineRunner init(){
+    /*@Bean
+    CommandLineRunner ini(){
         return args -> {
 
         };
-    }
+    }*/
 }

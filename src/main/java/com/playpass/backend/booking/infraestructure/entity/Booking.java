@@ -1,6 +1,6 @@
 package com.playpass.backend.booking.infraestructure.entity;
 
-import com.playpass.backend.activity.infraestructure.entity.Sesion;
+import com.playpass.backend.sesion.infraestructure.entity.Sesion;
 import com.playpass.backend.user.infraestructure.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "bookings", uniqueConstraints = @UniqueConstraint(columnNames = {"sesionId", "usuarioId"}))
+@Table(name = "bookings", uniqueConstraints = @UniqueConstraint(columnNames =
+        {"sesion_id", "usuario_id"}))
 public class Booking {
 
     @Id
