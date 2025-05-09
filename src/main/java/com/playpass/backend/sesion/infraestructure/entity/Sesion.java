@@ -30,6 +30,8 @@ public class Sesion {
 
     private LocalTime time;
 
+    private int places=activity.getPlaces();
+
     @OneToMany(mappedBy = "sesion",cascade = CascadeType.ALL)
     private List<Booking> bookings;
 }

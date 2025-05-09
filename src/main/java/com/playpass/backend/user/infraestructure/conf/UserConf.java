@@ -20,7 +20,7 @@ public class UserConf {
     private final AuthService  authService;
 
     @Bean
-    CommandLineRunner init() {
+    CommandLineRunner initUser() {
         String admin="admin";
         return args -> {
             if (userRepository.findByEmail(admin).isEmpty()) {

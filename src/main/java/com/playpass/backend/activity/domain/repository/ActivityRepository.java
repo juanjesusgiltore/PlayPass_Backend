@@ -11,4 +11,6 @@ public interface ActivityRepository {
 
     Optional<Activity> findByName(String name);
 
+    Activity save(Activity activity);
+
 }
