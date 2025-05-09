@@ -25,4 +25,10 @@ public class ActivityAdapter implements ActivityRepository {
     public Optional<Activity> findByName(String name) {
         return this.activityRespositoryPostgreSql.findByName(name);
     }
+
+    @Override
+    public Activity save(Activity activity) {
+        activityRespositoryPostgreSql.save(activity);
+        return activity;
+    }
 }
