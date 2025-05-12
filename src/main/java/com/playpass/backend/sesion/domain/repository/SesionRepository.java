@@ -6,6 +6,7 @@ import com.playpass.backend.sesion.infraestructure.entity.Sesion;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface SesionRepository {
 
@@ -16,4 +17,6 @@ public interface SesionRepository {
     Sesion delete(Long id);
 
     List<Sesion>deleteList(List<Long> ids);
+
+    Optional<Sesion> findById(Long id);
 }
