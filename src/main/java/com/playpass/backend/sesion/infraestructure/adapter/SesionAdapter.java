@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -40,5 +41,10 @@ public class SesionAdapter implements SesionRepository {
         sesionRepositoryPostgreSql.deleteAll(sesions);
 
         return sesions;
+    }
+
+    @Override
+    public Optional<Sesion> findById(Long id) {
+        return sesionRepositoryPostgreSql.findById(id);
     }
 }
