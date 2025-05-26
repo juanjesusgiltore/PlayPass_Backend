@@ -49,4 +49,6 @@ public class User {
 
     private CreditCard creditCard;
 
+    private int aviableSesions;
+
 }

@@ -56,12 +56,11 @@ public class BookingService {
 
     private void checkBooking(User user,Sesion sesion){
         for(Booking booking : user.getBookings()){
-            //Todo Meter al usuario unos puntos de reserva
+            if(user.getAviableSesions()==0){
+                throw new BookingAlreadyExistException("El usuario no le quedan sesiones disponibles");
+            }
             if(sesion.getPlaces()==0){
                 throw new SesionFullException("La sesion ya ha sido ocupada");
-            }
-            if(booking.getSesion().equals(sesion)){
-                throw new BookingAlreadyExistException("La reserva ya existe");
             }
             if(booking.getSesion().getActivity().equals(sesion.getActivity())){
                 throw new BookingAlreadyExistException("Ya tienenes reservada una sesion en esta actividad");
