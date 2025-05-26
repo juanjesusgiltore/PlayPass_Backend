@@ -1,4 +1,4 @@
-package com.playpass.backend.config;
+package com.playpass.backend.shared.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

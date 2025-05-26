@@ -1,6 +1,7 @@
 package com.playpass.backend.user.application.service;
 
 import com.playpass.backend.auth.domain.model.LoginRequest;
+import com.playpass.backend.user.domain.exception.UserNotFoundException;
 import com.playpass.backend.user.domain.repository.UserRepository;
 import com.playpass.backend.user.infraestructure.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,8 @@ public class UserService {
     }
 
     public User getUser(long id) {
-        return userRepository.findById(id).orElseThrow();
+        return userRepository.findById(id).orElseThrow(()->
+                new UserNotFoundException("El usuario no existe"));
     }
 
     public User deleteUser(long id) {
@@ -27,7 +29,9 @@ public class UserService {
     }
 
     public User updatePassword(LoginRequest loginRequest) {
-        User user= userRepository.findByEmail(loginRequest.email()).orElseThrow();
+        User user= userRepository.findByEmail(loginRequest.email()).orElseThrow(()->
+                new UserNotFoundException("El usuario no existe")
+        );
         user.setPassword(loginRequest.password());
         return userRepository.save(user);
     }
