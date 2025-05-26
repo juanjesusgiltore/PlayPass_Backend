@@ -1,4 +1,4 @@
-package com.playpass.backend.config;
+package com.playpass.backend.shared.config;
 
 import com.playpass.backend.auth.infraestructure.conf.JwtAuthFilter;
 import com.playpass.backend.auth.infraestructure.entity.Token;
