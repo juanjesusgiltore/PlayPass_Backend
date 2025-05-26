@@ -26,6 +26,11 @@ public class BookingService {
         User user=userRepository.findById(bookingRequest.idUser()).orElseThrow();
         Sesion sesion=sesionRepository.findById(bookingRequest.idSesion()).orElseThrow();
 
+        checkBooking(user,sesion);
+
+        sesion.setPlaces(sesion.getPlaces()-1);
+
+        sesionRepository.save(sesion);
         Booking booking=bookingMapper.bookingRequestToBooking(user,sesion);
 
         return bookingRepository.save(booking);
@@ -39,5 +44,23 @@ public class BookingService {
         User user=userRepository.findById(id).orElseThrow();
 
         return bookingRepository.findAllByUserId(user);
+    }
+
+    private void checkBooking(User user,Sesion sesion){
+        for(Booking booking : user.getBookings()){
+            if(sesion.getPlaces()==0){
+                throw new IllegalArgumentException("La sesion ya ha sido ocupada");
+            }
+            if(booking.getSesion().equals(sesion)){
+                throw new IllegalArgumentException("Sesion already exists");
+            }
+            if(booking.getSesion().getActivity().equals(sesion.getActivity())){
+                throw new IllegalArgumentException("Ya tienenes Reservada una sesion en esta actividad");
+            }
+            if(booking.getSesion().getTime().equals(sesion.getTime()) &&
+            booking.getSesion().getDate().equals(sesion.getDate())){
+                throw new IllegalArgumentException("Ya tienes una sesion en esta fecha");
+            }
+        }
     }
 }
