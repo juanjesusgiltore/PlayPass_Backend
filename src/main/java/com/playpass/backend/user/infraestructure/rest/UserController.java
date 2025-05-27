@@ -1,7 +1,10 @@
 package com.playpass.backend.user.infraestructure.rest;
 
 import com.playpass.backend.auth.domain.model.LoginRequest;
+import com.playpass.backend.user.application.service.CreditCardService;
 import com.playpass.backend.user.application.service.UserService;
+import com.playpass.backend.user.domain.model.UserAviableSesions;
+import com.playpass.backend.user.infraestructure.entity.CreditCard;
 import com.playpass.backend.user.infraestructure.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    private final CreditCardService creditCardService;
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/users")
@@ -42,6 +48,18 @@ public class UserController {
         return ResponseEntity.ok(userService.updatePassword(loginRequest));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PatchMapping("/sesions")
+    public ResponseEntity<Integer> setSesions(@RequestBody UserAviableSesions userAviableSesions) {
+        return ResponseEntity.ok(userService.saveAviableSesions(userAviableSesions));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PatchMapping("/card")
+    public ResponseEntity<CreditCard> setSesions(@RequestBody CreditCard creditCard) {
+        return ResponseEntity.ok(creditCardService.saveCreditCard(creditCard));
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/new")
     public ResponseEntity<User> createUser(@RequestBody final User newUser) {
@@ -54,6 +72,10 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 
-
+    @PreAuthorize("hasRoles('ADMIN','USER')")
+    @PutMapping("/updateCard")
+    public ResponseEntity<CreditCard> updateUser(@RequestBody final CreditCard creditCardUpdate) {
+        return ResponseEntity.ok(creditCardService.updateCreditCard());
+    }
 
 }

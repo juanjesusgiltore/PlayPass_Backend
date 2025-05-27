@@ -36,7 +36,9 @@ public class BookingService {
         checkBooking(user,sesion);
 
         sesion.setPlaces(sesion.getPlaces()-1);
+        user.setAviableSesions(user.getAviableSesions()-1);
 
+        userRepository.save(user);
         sesionRepository.save(sesion);
         Booking booking=bookingMapper.bookingRequestToBooking(user,sesion);
 
