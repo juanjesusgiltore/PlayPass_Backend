@@ -42,10 +42,8 @@ public class UserAdapter implements UserRepository {
     }
 
     @Override
-    public User update(User user) {
-        User user1 = userRepositoryPostgreSql.findById(user.getId()).orElse(null);
+    public User update(User user,User user1) {
 
-        if (user1 != null) {
             user1.setEmail(user.getEmail());
             user1.setPassword(user.getPassword());
             user1.setName(user.getName());
@@ -53,8 +51,7 @@ public class UserAdapter implements UserRepository {
             user1.setPhone(user.getPhone());
 
             userRepositoryPostgreSql.save(user1);
-            
-        }
+
 
         return user1;
     }

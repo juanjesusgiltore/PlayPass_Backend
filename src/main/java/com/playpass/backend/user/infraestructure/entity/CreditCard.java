@@ -1,8 +1,7 @@
 package com.playpass.backend.user.infraestructure.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Table(name = "creditcards")
 public class CreditCard {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String cardHolderName;
 
@@ -22,6 +24,8 @@ public class CreditCard {
 
     private String cvv;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
 
 }

@@ -1,7 +1,6 @@
 package com.playpass.backend.user.infraestructure.rest;
 
 import com.playpass.backend.auth.domain.model.LoginRequest;
-import com.playpass.backend.user.application.service.CreditCardService;
 import com.playpass.backend.user.application.service.UserService;
 import com.playpass.backend.user.domain.model.UserAviableSesions;
 import com.playpass.backend.user.infraestructure.entity.CreditCard;
@@ -20,8 +19,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
-    private final CreditCardService creditCardService;
 
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -42,11 +39,7 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUser(id));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @PatchMapping("/password")
-    public ResponseEntity<User> updatePassword(@RequestBody final LoginRequest loginRequest) {
-        return ResponseEntity.ok(userService.updatePassword(loginRequest));
-    }
+
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("/sesions")
@@ -57,7 +50,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("/card")
     public ResponseEntity<CreditCard> setSesions(@RequestBody CreditCard creditCard) {
-        return ResponseEntity.ok(creditCardService.saveCreditCard(creditCard));
+        return ResponseEntity.ok(userService.saveCreditCard(creditCard));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -66,16 +59,16 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(newUser));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/update")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PutMapping("/update")
     public ResponseEntity<User> updateUser(@RequestBody final User updateUser) {
         return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 
-    @PreAuthorize("hasRoles('ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PutMapping("/updateCard")
-    public ResponseEntity<CreditCard> updateUser(@RequestBody final CreditCard creditCardUpdate) {
-        return ResponseEntity.ok(creditCardService.updateCreditCard());
+    public ResponseEntity<CreditCard> updateUserCard(@RequestBody final CreditCard creditCardUpdate) {
+        return ResponseEntity.ok(userService.updateCreditCard(creditCardUpdate));
     }
 
 }
