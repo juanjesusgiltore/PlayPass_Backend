@@ -23,6 +23,10 @@ public class User {
         ADMIN,USER
     }
 
+    public enum ModelSesion{
+        S,M,L
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,6 +54,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private CreditCard creditCard;
 
-    private int aviableSesions;
+    private int aviableSesions=0;
+
+    private ModelSesion modelSesion;
 
 }

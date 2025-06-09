@@ -58,9 +58,10 @@ public class UserAdapter implements UserRepository {
 
     @Override
     public Integer saveAviableSesions(User user, int sesisons) {
-        user.setAviableSesions(sesisons);
+        user.setAviableSesions(user.getAviableSesions()+sesisons);
         userRepositoryPostgreSql.save(user);
-        return sesisons;
+        return user.getAviableSesions();
+
     }
 
 
