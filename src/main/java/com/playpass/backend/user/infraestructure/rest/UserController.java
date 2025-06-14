@@ -39,8 +39,6 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUser(id));
     }
 
-
-
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("/sesions")
     public ResponseEntity<Integer> setSesions(@RequestBody UserAviableSesions userAviableSesions) {
@@ -49,7 +47,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("/card")
-    public ResponseEntity<CreditCard> setSesions(@RequestBody CreditCard creditCard) {
+    public ResponseEntity<CreditCard> setCreditCard(@RequestBody CreditCard creditCard) {
         return ResponseEntity.ok(userService.saveCreditCard(creditCard));
     }
 
@@ -59,15 +57,15 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(newUser));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/update")
     public ResponseEntity<User> updateUser(@RequestBody final User updateUser) {
         return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @PutMapping("/update-card")
-    public ResponseEntity<CreditCard> updateUserCard(@RequestBody final CreditCard creditCardUpdate) {
+    @PreAuthorize("hasRoles('ADMIN','USER')")
+    @PutMapping("/updateCard")
+    public ResponseEntity<CreditCard> updateCard(@RequestBody final CreditCard creditCardUpdate) {
         return ResponseEntity.ok(userService.updateCreditCard(creditCardUpdate));
     }
 

@@ -31,4 +31,9 @@ public class ActivityAdapter implements ActivityRepository {
         activityRespositoryPostgreSql.save(activity);
         return activity;
     }
+
+    @Override
+    public int count() {
+        return activityRespositoryPostgreSql.findAll().size();
+    }
 }

@@ -13,4 +13,7 @@ public interface ActivityRepository {
 
     Activity save(Activity activity);
 
+    int count();
+
+
 }

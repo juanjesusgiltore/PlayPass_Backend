@@ -38,4 +38,5 @@ public class CreditCardAdapter implements CreditCardRepository {
     public CreditCard findCreditCardByCardNumber(String cardNumber) {
         return creditCardRepositoryPostgreSql.findByCardNumber(cardNumber);
     }
+
 }

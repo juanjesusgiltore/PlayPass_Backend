@@ -3,15 +3,14 @@ package com.playpass.backend.user.infraestructure.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "creditcards")
 public class CreditCard {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,8 +23,10 @@ public class CreditCard {
 
     private String cvv;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "users")
     private User user;
+
 
 
 }

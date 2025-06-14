@@ -31,6 +31,7 @@ public class UserService {
                 new UserNotFoundException("El usuario no existe"));
     }
 
+
     public User deleteUser(long id) {
         return userRepository.delete(id);
     }

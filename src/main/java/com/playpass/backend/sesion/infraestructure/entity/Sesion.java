@@ -2,6 +2,7 @@ package com.playpass.backend.sesion.infraestructure.entity;
 
 import com.playpass.backend.activity.infraestructure.entity.Activity;
 import com.playpass.backend.booking.infraestructure.entity.Booking;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +31,13 @@ public class Sesion {
 
     private LocalTime time;
 
-    private int places=activity.getPlaces();
+    private int places;
 
     @OneToMany(mappedBy = "sesion",cascade = CascadeType.ALL)
     private List<Booking> bookings;
+
+    @PostConstruct
+    public void init(){
+        this.places=activity.getPlaces();
+    }
 }

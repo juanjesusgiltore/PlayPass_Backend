@@ -8,4 +8,5 @@ public interface CreditCardRepository {
     CreditCard updateCreditCard(CreditCard creditCard);
 
     CreditCard findCreditCardByCardNumber(String cardNumber);
+
 }
