@@ -1,4 +1,4 @@
-package com.playpass.backend.config;
+package com.playpass.backend.shared.config;
 
 import com.playpass.backend.user.infraestructure.entity.User;
 import com.playpass.backend.user.domain.repository.UserRepository;

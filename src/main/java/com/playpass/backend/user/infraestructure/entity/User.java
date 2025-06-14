@@ -47,4 +47,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+    private CreditCard creditCard;
+
+    private int aviableSesions;
+
 }

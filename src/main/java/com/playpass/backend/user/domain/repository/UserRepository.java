@@ -1,5 +1,6 @@
 package com.playpass.backend.user.domain.repository;
 
+import com.playpass.backend.user.domain.model.UserAviableSesions;
 import com.playpass.backend.user.infraestructure.entity.User;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface UserRepository  {
     User delete(long id);
 
     User update(User user);
+
+    Integer saveAviableSesions(User user,int sesisons);
 
 }
