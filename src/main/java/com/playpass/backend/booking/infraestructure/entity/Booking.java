@@ -31,6 +31,7 @@ public class Booking {
     @JoinColumn(name = "usuario_id")
     private User user;
 
+    @Builder.Default
     private LocalDateTime bookingDate=LocalDateTime.now();
 
 }
