@@ -1,6 +1,5 @@
 package com.playpass.backend.user.domain.repository;
 
-import com.playpass.backend.user.domain.model.UserAviableSesions;
 import com.playpass.backend.user.infraestructure.entity.User;
 
 import java.util.List;

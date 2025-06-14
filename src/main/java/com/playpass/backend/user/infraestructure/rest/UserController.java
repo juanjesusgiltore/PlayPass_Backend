@@ -75,7 +75,7 @@ public class UserController {
     @PreAuthorize("hasRoles('ADMIN','USER')")
     @PutMapping("/updateCard")
     public ResponseEntity<CreditCard> updateUser(@RequestBody final CreditCard creditCardUpdate) {
-        return ResponseEntity.ok(creditCardService.updateCreditCard());
+        return ResponseEntity.ok(creditCardService.updateCreditCard(creditCardUpdate));
     }
 
 }
