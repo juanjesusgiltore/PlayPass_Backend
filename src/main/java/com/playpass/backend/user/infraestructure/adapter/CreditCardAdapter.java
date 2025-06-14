@@ -17,4 +17,15 @@ public class CreditCardAdapter implements CreditCardRepository {
         creditCardRepositoryPostgreSql.save(creditCard);
         return creditCard;
     }
+
+    @Override
+    public CreditCard updateCreditCard(CreditCard creditCard) {
+        CreditCard creditCardOriginal=creditCardRepositoryPostgreSql.getById(creditCard.getId());
+        creditCardOriginal.setCardNumber( creditCard.getCardNumber());
+        creditCardOriginal.setCardHolderName( creditCard.getCardHolderName());
+        creditCardOriginal.setCvv( creditCard.getCvv());
+        creditCardOriginal.setExpirationDate( creditCard.getExpirationDate());
+        creditCardRepositoryPostgreSql.save(creditCardOriginal);
+        return null;
+    }
 }

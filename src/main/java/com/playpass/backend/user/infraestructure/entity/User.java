@@ -34,6 +34,8 @@ public class User {
 
     private String password;
 
+    private String image;
+
     @Column(unique = true)
     private String phone;
 
@@ -47,6 +49,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+    @OneToOne
+    @JoinColumn(name = "credit_card")
     private CreditCard creditCard;
 
     private int aviableSesions;
