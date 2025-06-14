@@ -57,6 +57,7 @@ public class User {
     @JoinColumn(name = "credit_card")
     private CreditCard creditCard;
 
+    @Builder.Default
     private int aviableSesions=0;
 
     private ModelSesion modelSesion;
