@@ -1,6 +1,7 @@
 package com.playpass.backend.user.application.service;
 
-import com.playpass.backend.auth.domain.model.LoginRequest;
+
+import com.playpass.backend.user.domain.exception.CreditCardExistException;
 import com.playpass.backend.user.domain.exception.UserNotFoundException;
 import com.playpass.backend.user.domain.model.UserAviableSesions;
 import com.playpass.backend.user.domain.repository.CreditCardRepository;
@@ -17,6 +18,9 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final CreditCardRepository creditCardRepository;
+
+
 
     public List<User> getListUser() {
         return userRepository.findAll();
@@ -27,28 +31,43 @@ public class UserService {
                 new UserNotFoundException("El usuario no existe"));
     }
 
+
     public User deleteUser(long id) {
         return userRepository.delete(id);
     }
 
-    public User updatePassword(LoginRequest loginRequest) {
-        User user= userRepository.findByEmail(loginRequest.email()).orElseThrow(()->
-                new UserNotFoundException("El usuario no existe")
-        );
-        user.setPassword(loginRequest.password());
-        return userRepository.save(user);
-    }
+
 
     public User createUser(User user) {
         return userRepository.save(user);
     }
 
     public User updateUser(User user) {
-        return userRepository.update(user);
+        User user1=getUser(user.getId());
+        return userRepository.update(user,user1);
     }
 
     public Integer saveAviableSesions(UserAviableSesions  userAviableSesions) {
         User user=getUser(userAviableSesions.id());
         return userRepository.saveAviableSesions(user,userAviableSesions.aviableSesions());
     }
+
+
+    public CreditCard saveCreditCard(CreditCard creditCard) {
+        if(findCreditCardByCardNumber(String.valueOf(creditCard.getCardNumber())) == null) {
+            throw new CreditCardExistException("La tarjeta ya existe");
+        }
+        return creditCardRepository.saveCreditCard(creditCard);
+    }
+
+    public CreditCard updateCreditCard(CreditCard creditCardUpdate) {
+
+        return creditCardRepository.updateCreditCard(creditCardUpdate);
+    }
+
+    private CreditCard findCreditCardByCardNumber(String cardNumber) {
+        return creditCardRepository.findCreditCardByCardNumber(cardNumber);
+    }
+
+
 }

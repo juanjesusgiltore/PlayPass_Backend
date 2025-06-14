@@ -5,6 +5,7 @@ import com.playpass.backend.auth.domain.model.RegisterRequest;
 import com.playpass.backend.auth.domain.model.TokenResponse;
 import com.playpass.backend.auth.domain.repository.TokenRepository;
 import com.playpass.backend.auth.infraestructure.entity.Token;
+import com.playpass.backend.user.domain.exception.UserNotFoundException;
 import com.playpass.backend.user.infraestructure.entity.User;
 import com.playpass.backend.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,16 @@ public class AuthService {
         return new TokenResponse(jwtToken,jwtRefreshToken);
     }
 
+    public TokenResponse updatePassword(LoginRequest loginRequest) {
+        User user= userRepository.findByEmail(loginRequest.email()).orElseThrow(()->
+                new UserNotFoundException("El usuario no existe")
+        );
+
+        user.setPassword(passwordEncoder.encode(loginRequest.password()));
+
+        return login(new LoginRequest(user.getEmail(),user.getPassword()));
+    }
+
     public TokenResponse login(LoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -52,7 +63,8 @@ public class AuthService {
                         request.password()
                 )
         );
-        User user=userRepository.findByEmail(request.email()).orElseThrow();
+        User user=userRepository.findByEmail(request.email()).orElseThrow(()->
+                new UsernameNotFoundException("No existe el usuario"));
 
         String jwToken=jwtService.generateToken(user);
         String jwtRefreshToken=jwtService.generateRefreshToken(user);

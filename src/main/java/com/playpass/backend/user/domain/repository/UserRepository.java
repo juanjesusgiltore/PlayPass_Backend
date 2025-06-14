@@ -18,7 +18,7 @@ public interface UserRepository  {
 
     User delete(long id);
 
-    User update(User user);
+    User update(User user,User user1);
 
     Integer saveAviableSesions(User user,int sesisons);
 

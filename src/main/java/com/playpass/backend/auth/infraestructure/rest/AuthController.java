@@ -4,11 +4,13 @@ import com.playpass.backend.auth.domain.model.LoginRequest;
 import com.playpass.backend.auth.domain.model.RegisterRequest;
 import com.playpass.backend.auth.domain.model.TokenResponse;
 import com.playpass.backend.auth.application.service.AuthService;
+import com.playpass.backend.user.infraestructure.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,7 +32,10 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
-
+    @PatchMapping("/password")
+    public ResponseEntity<TokenResponse> updatePassword(@RequestBody final LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.updatePassword(loginRequest));
+    }
 
     @Operation(
             summary = "Refresh token",

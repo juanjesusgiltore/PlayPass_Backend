@@ -23,6 +23,10 @@ public class User {
         ADMIN,USER
     }
 
+    public enum ModelSesion{
+        S,M,L
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,6 +57,8 @@ public class User {
     @JoinColumn(name = "credit_card")
     private CreditCard creditCard;
 
-    private int aviableSesions;
+    private int aviableSesions=0;
+
+    private ModelSesion modelSesion;
 
 }

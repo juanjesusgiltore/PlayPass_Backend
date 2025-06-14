@@ -10,9 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Table(name = "creditcards")
 public class CreditCard {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String cardHolderName;
 
     private String cardNumber;

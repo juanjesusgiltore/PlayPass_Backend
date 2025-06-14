@@ -6,4 +6,7 @@ public interface CreditCardRepository {
     CreditCard saveCreditCard(CreditCard creditCard);
 
     CreditCard updateCreditCard(CreditCard creditCard);
+
+    CreditCard findCreditCardByCardNumber(String cardNumber);
+
 }
