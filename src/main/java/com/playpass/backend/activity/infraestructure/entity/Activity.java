@@ -21,6 +21,8 @@ public class Activity {
 
     private String description;
 
+    private String image;
+
     private int places;
 
     @OneToMany(mappedBy = "activity",cascade = CascadeType.ALL)

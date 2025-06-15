@@ -38,7 +38,6 @@ public class User {
 
     private String password;
 
-    private String image;
 
     @Column(unique = true)
     private String phone;
