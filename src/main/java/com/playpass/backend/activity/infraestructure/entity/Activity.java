@@ -1,5 +1,6 @@
 package com.playpass.backend.activity.infraestructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.playpass.backend.sesion.infraestructure.entity.Sesion;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,6 +26,7 @@ public class Activity {
 
     private int places;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "activity",cascade = CascadeType.ALL)
     private List<Sesion> sesions;
 
