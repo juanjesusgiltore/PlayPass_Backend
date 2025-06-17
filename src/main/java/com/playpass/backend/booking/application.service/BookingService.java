@@ -45,8 +45,21 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public Booking delete(Long id){
-        return bookingRepository.delete(id);
+    public Booking delete(Long idSesion,Long idUser){
+        User user=userRepository.findById(idUser).orElseThrow(()->
+                new UserNotFoundException("El usuario no existe"));
+        Sesion sesion=sesionRepository.findById(idSesion).orElseThrow(()->
+                new SesionNotExistException("La sesion no existe"));
+
+        sesion.setPlaces(sesion.getPlaces()+1);
+        user.setAviableSesions(user.getAviableSesions()+1);
+
+        userRepository.save(user);
+        sesionRepository.save(sesion);
+        Booking booking=bookingMapper.bookingRequestToBooking(user,sesion);
+
+
+        return bookingRepository.delete(booking.getId());
     }
 
     public List<Booking> findAllByUser(Long id){
@@ -57,16 +70,13 @@ public class BookingService {
     }
 
     private void checkBooking(User user,Sesion sesion){
+        if(user.getAviableSesions()<=0){
+            throw new BookingAlreadyExistException("El usuario no le quedan sesiones disponibles");
+        }
+        if(sesion.getPlaces()<=0) {
+            throw new SesionFullException("La sesion ya ha sido ocupada");
+        }
         for(Booking booking : user.getBookings()){
-            if(user.getAviableSesions()==0){
-                throw new BookingAlreadyExistException("El usuario no le quedan sesiones disponibles");
-            }
-            if(sesion.getPlaces()==0){
-                throw new SesionFullException("La sesion ya ha sido ocupada");
-            }
-            if(booking.getSesion().getActivity().equals(sesion.getActivity())){
-                throw new BookingAlreadyExistException("Ya tienenes reservada una sesion en esta actividad");
-            }
             if(booking.getSesion().getTime().equals(sesion.getTime()) &&
             booking.getSesion().getDate().equals(sesion.getDate())){
                 throw new BookingTimeAlreadyExistException("Ya tienes una reserva en esta fecha");

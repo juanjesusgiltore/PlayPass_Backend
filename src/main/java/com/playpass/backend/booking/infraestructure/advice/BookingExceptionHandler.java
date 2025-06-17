@@ -6,13 +6,16 @@ import com.playpass.backend.booking.domain.exception.BookingTimeAlreadyExistExce
 import com.playpass.backend.shared.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class BookingExceptionHandler {
 
     @ExceptionHandler(BookingAlreadyExistException.class)
+
     public ResponseEntity<ErrorDTO> handleBookingAlreadyExistException(BookingAlreadyExistException ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)

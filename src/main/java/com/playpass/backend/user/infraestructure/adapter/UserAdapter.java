@@ -49,6 +49,9 @@ public class UserAdapter implements UserRepository {
             user1.setName(user.getName());
             user1.setRole(user.getRole());
             user1.setPhone(user.getPhone());
+            user1.setAviableSesions(user.getAviableSesions());
+            user1.setCreditCard(user.getCreditCard());
+            user1.setModelSesion(user.getModelSesion());
 
             userRepositoryPostgreSql.save(user1);
 
