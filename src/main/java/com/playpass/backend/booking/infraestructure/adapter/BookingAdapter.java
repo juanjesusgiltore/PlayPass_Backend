@@ -23,12 +23,17 @@ public class BookingAdapter implements BookingRepository {
     @Override
     public Booking delete(Long id) {
         Booking booking=bookingRepositoryPostgreSql.findById(id).orElseThrow();
-        bookingRepositoryPostgreSql.delete(booking);
+        bookingRepositoryPostgreSql.deleteById(id);
         return booking;
     }
 
     @Override
     public List<Booking> findAllByUserId(User user) {
         return bookingRepositoryPostgreSql.findByUser(user);
+    }
+
+    @Override
+    public Booking findById(Long id) {
+        return bookingRepositoryPostgreSql.findById(id).orElseThrow();
     }
 }

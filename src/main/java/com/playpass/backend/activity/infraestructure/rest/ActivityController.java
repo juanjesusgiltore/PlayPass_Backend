@@ -16,13 +16,13 @@ public class ActivityController {
     private final ActivityService activityService;
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @GetMapping("/user/activitys")
+    @GetMapping("/activitys")
     public ResponseEntity<List<Activity>> findAll() {
         return ResponseEntity.ok(this.activityService.findAll());
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @GetMapping("/user/{name}")
+    @GetMapping("/{name}")
     public ResponseEntity<Activity> findByName(@PathVariable String name) {
         return ResponseEntity.ok(this.activityService.findByName(name));
     }

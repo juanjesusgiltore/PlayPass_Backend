@@ -1,6 +1,5 @@
 package com.playpass.backend.user.infraestructure.rest;
 
-import com.playpass.backend.auth.domain.model.LoginRequest;
 import com.playpass.backend.user.application.service.UserService;
 import com.playpass.backend.user.domain.model.UserAviableSesions;
 import com.playpass.backend.user.infraestructure.entity.CreditCard;
@@ -27,10 +26,16 @@ public class UserController {
         return ResponseEntity.ok(userService.getListUser());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable final long id) {
         return ResponseEntity.ok(userService.getUser(id));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody final User updateUser) {
+        return ResponseEntity.ok(userService.updateUser(updateUser));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -57,13 +62,9 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(newUser));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/update")
-    public ResponseEntity<User> updateUser(@RequestBody final User updateUser) {
-        return ResponseEntity.ok(userService.updateUser(updateUser));
-    }
 
-    @PreAuthorize("hasRoles('ADMIN','USER')")
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PutMapping("/updateCard")
     public ResponseEntity<CreditCard> updateCard(@RequestBody final CreditCard creditCardUpdate) {
         return ResponseEntity.ok(userService.updateCreditCard(creditCardUpdate));

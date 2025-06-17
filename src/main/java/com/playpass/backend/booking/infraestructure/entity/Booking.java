@@ -1,5 +1,7 @@
 package com.playpass.backend.booking.infraestructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playpass.backend.sesion.infraestructure.entity.Sesion;
 import com.playpass.backend.user.infraestructure.entity.User;
 import jakarta.persistence.*;
@@ -25,10 +27,12 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "sesion_id")
+    @JsonBackReference
     private Sesion sesion;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonIgnore
     private User user;
 
     @Builder.Default

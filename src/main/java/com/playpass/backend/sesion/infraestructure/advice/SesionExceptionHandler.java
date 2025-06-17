@@ -5,10 +5,10 @@ import com.playpass.backend.sesion.domain.exception.SesionNotExistException;
 import com.playpass.backend.shared.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class SesionExceptionHandler {
 
     @ExceptionHandler(SesionFullException.class)

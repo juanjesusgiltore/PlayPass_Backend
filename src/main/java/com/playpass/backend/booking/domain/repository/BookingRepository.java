@@ -12,4 +12,6 @@ public interface BookingRepository {
     Booking delete(Long id);
 
     List<Booking> findAllByUserId(User user);
+
+    Booking findById(Long id);
 }

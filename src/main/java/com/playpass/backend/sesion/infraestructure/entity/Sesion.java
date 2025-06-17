@@ -1,5 +1,7 @@
 package com.playpass.backend.sesion.infraestructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.playpass.backend.activity.infraestructure.entity.Activity;
 import com.playpass.backend.booking.infraestructure.entity.Booking;
 import jakarta.annotation.PostConstruct;
@@ -24,6 +26,7 @@ public class Sesion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     private Activity activity;
 
@@ -33,6 +36,7 @@ public class Sesion {
 
     private int places;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "sesion",cascade = CascadeType.ALL)
     private List<Booking> bookings;
 

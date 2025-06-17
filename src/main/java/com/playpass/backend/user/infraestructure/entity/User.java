@@ -38,12 +38,11 @@ public class User {
 
     private String password;
 
-    private String image;
 
     @Column(unique = true)
     private String phone;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Token>tokens;
 
@@ -53,7 +52,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_card")
     private CreditCard creditCard;
 
