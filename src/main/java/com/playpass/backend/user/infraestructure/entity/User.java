@@ -1,6 +1,5 @@
 package com.playpass.backend.user.infraestructure.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.playpass.backend.auth.infraestructure.entity.Token;
 import com.playpass.backend.booking.infraestructure.entity.Booking;
@@ -43,7 +42,7 @@ public class User {
     @Column(unique = true)
     private String phone;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Token>tokens;
 
@@ -51,10 +50,9 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
     private List<Booking> bookings;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_card")
     private CreditCard creditCard;
 

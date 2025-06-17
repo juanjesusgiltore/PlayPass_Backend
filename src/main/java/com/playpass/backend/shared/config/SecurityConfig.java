@@ -3,6 +3,7 @@ package com.playpass.backend.shared.config;
 import com.playpass.backend.auth.infraestructure.conf.JwtAuthFilter;
 import com.playpass.backend.auth.infraestructure.entity.Token;
 import com.playpass.backend.auth.domain.repository.TokenRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +48,19 @@ public class SecurityConfig {
                                 "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(
+                        exception -> exception
+                                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                                    response.setContentType("application/json");
+                                    response.getWriter().write("{\"code\":\"FORBIDDEN\",\"message\":\"Acceso denegado\"}");
+                                })
+                                .authenticationEntryPoint((request, response, authException) -> {
+                                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                                    response.setContentType("application/json");
+                                    response.getWriter().write("{\"code\":\"UNAUTHORIZED\",\"message\":\"No autenticado\"}");
+                                })
+                )
                 .sessionManagement(sess->
                         sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -70,7 +84,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:4200"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT","PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // si usas cookies o Authorization headers
 

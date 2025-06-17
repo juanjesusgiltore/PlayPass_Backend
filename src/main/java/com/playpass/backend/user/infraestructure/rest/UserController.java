@@ -32,6 +32,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody final User updateUser) {
+        return ResponseEntity.ok(userService.updateUser(updateUser));
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable final long id) {
@@ -56,11 +62,7 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(newUser));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/update")
-    public ResponseEntity<User> updateUser(@RequestBody final User updateUser) {
-        return ResponseEntity.ok(userService.updateUser(updateUser));
-    }
+
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PutMapping("/updateCard")

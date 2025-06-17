@@ -9,6 +9,8 @@ import com.playpass.backend.user.domain.exception.UserNotFoundException;
 import com.playpass.backend.user.infraestructure.entity.User;
 import com.playpass.backend.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -34,7 +37,7 @@ public class AuthService {
                 .name(request.name())
                 .email(request.email())
                 .phone(request.phone())
-                .role(request.role())
+                .role(User.Role.USER)
                 .password(passwordEncoder.encode(request.password()))
                 .build();
 
@@ -50,10 +53,13 @@ public class AuthService {
         User user= userRepository.findByEmail(loginRequest.email()).orElseThrow(()->
                 new UserNotFoundException("El usuario no existe")
         );
+        String rawPass=loginRequest.password();
 
-        user.setPassword(passwordEncoder.encode(loginRequest.password()));
+        user.setPassword(passwordEncoder.encode(rawPass));
+        userRepository.save(user);
 
-        return login(new LoginRequest(user.getEmail(),user.getPassword()));
+        log.info("Realizando login con email: {} y contraseña: {}", user.getEmail(), rawPass);
+        return login(new LoginRequest(user.getEmail(),rawPass));
     }
 
     public TokenResponse login(LoginRequest request){

@@ -18,19 +18,19 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @PostMapping("/user/reservar")
+    @PostMapping("reservar")
     public ResponseEntity<Booking> reserve(@RequestBody BookingRequest booking){
         return ResponseEntity.ok(bookingService.save(booking));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @DeleteMapping("/user/delete/{id}")
-    public ResponseEntity<Booking> delete(@PathVariable Long id){
-        return ResponseEntity.ok(bookingService.delete(id));
+    @DeleteMapping("delete/{idsesion}/{iduser}")
+    public ResponseEntity<Booking> delete(@PathVariable Long idsesion,@PathVariable Long iduser){
+        return ResponseEntity.ok(bookingService.delete(idsesion,iduser));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    @GetMapping("/user/{id}/reservas")
+    @GetMapping("{id}/reservas")
     public ResponseEntity<List<Booking>> findAll(@PathVariable Long id){
         return ResponseEntity.ok(bookingService.findAllByUser(id));
     }
