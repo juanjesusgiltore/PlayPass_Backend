@@ -1,9 +1,9 @@
 # backend/Dockerfile
 
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
 WORKDIR /app
-COPY spring-src/ ./
+COPY ./ ./
 
 RUN mvn clean package -DskipTests
 
